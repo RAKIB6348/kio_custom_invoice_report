@@ -39,3 +39,9 @@ class AccountMove(models.Model):
             move.student_class_roll = student.class_roll if student else False
             move.student_class_division_id = student.class_division_id if student else False
             move.student_group_id = student.group_id if student else False
+
+    def action_print_custom_receipt_invoice(self):
+        self.ensure_one()
+        return self.env.ref(
+            'kio_custom_invoice_report.action_report_custom_receipt_invoice'
+        ).report_action(self)

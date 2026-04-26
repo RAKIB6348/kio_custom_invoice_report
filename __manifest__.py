@@ -24,6 +24,8 @@ and related billing.
     # always loaded
     'data': [
         'views/report_paperformat.xml',
+        'views/report_action.xml',
+        'views/account_move_views.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

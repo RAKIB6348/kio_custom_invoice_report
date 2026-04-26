@@ -15,13 +15,5 @@
             <field name="header_spacing">0</field>
             <field name="dpi">90</field>
         </record>
-
-        <record id="account.account_invoices" model="ir.actions.report">
-            <field name="paperformat_id" ref="kio_custom_invoice_report.paperformat_invoice_receipt_publication"/>
-        </record>
-
-        <record id="account.account_invoices_without_payment" model="ir.actions.report">
-            <field name="paperformat_id" ref="kio_custom_invoice_report.paperformat_invoice_receipt_publication"/>
-        </record>
     </data>
 </odoo>

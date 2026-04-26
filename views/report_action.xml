@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="action_report_custom_receipt_invoice" model="ir.actions.report">
+            <field name="name">Custom Receipt Invoice</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">kio_custom_invoice_report.report_custom_receipt_invoice</field>
+            <field name="report_file">kio_custom_invoice_report.report_custom_receipt_invoice</field>
+            <field name="print_report_name">'Receipt - %s' % (object.name or object.ref or object.id)</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">form</field>
+            <field name="paperformat_id" ref="kio_custom_invoice_report.paperformat_invoice_receipt_publication"/>
+        </record>
+    </data>
+</odoo>

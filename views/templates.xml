@@ -1,11 +1,12 @@
 <odoo>
     <data>
-        <template id="report_invoice_document_inherit_receipt" inherit_id="account.report_invoice_document">
-            <xpath expr="//t[@t-call='web.external_layout']" position="replace">
-                <t t-call="web.basic_layout">
+        <template id="report_custom_receipt_invoice">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
                     <t t-set="o" t-value="o.with_context(lang=lang)"/>
                     <t t-set="lines" t-value="o.invoice_line_ids.filtered(lambda l: l.display_type == 'product')"/>
                     <t t-set="blank_rows" t-value="max(0, 15 - len(lines))"/>
+                    <t t-call="web.basic_layout">
                     <div class="page">
                         <style type="text/css">
                             .page {
@@ -205,8 +206,9 @@
                             </table>
                         </div>
                     </div>
+                    </t>
                 </t>
-            </xpath>
+            </t>
         </template>
     </data>
 </odoo>
