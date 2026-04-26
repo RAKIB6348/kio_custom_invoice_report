@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="paperformat_invoice_receipt_publication" model="report.paperformat">
+            <field name="name">Invoice Receipt Publication</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">12</field>
+            <field name="margin_right">12</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="account.account_invoices" model="ir.actions.report">
+            <field name="paperformat_id" ref="kio_custom_invoice_report.paperformat_invoice_receipt_publication"/>
+        </record>
+
+        <record id="account.account_invoices_without_payment" model="ir.actions.report">
+            <field name="paperformat_id" ref="kio_custom_invoice_report.paperformat_invoice_receipt_publication"/>
+        </record>
+    </data>
+</odoo>

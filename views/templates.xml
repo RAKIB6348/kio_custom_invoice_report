@@ -1,0 +1,212 @@
+<odoo>
+    <data>
+        <template id="report_invoice_document_inherit_receipt" inherit_id="account.report_invoice_document">
+            <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+                <t t-call="web.basic_layout">
+                    <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                    <t t-set="lines" t-value="o.invoice_line_ids.filtered(lambda l: l.display_type == 'product')"/>
+                    <t t-set="blank_rows" t-value="max(0, 15 - len(lines))"/>
+                    <div class="page">
+                        <style type="text/css">
+                            .page {
+                                margin: 0 !important;
+                            }
+                            .kio-receipt-page {
+                                font-family: 'Times New Roman', serif;
+                                width: 690px;
+                                margin: 18px auto 0;
+                                font-size: 15px;
+                                color: #000;
+                                line-height: 1.15;
+                                page-break-inside: avoid;
+                            }
+                            .kio-receipt-page .receipt-header {
+                                text-align: center;
+                                margin-bottom: 8px;
+                            }
+                            .kio-receipt-page .receipt-header h2 {
+                                font-size: 29px;
+                                font-weight: 700;
+                                margin: 0 0 3px 0;
+                            }
+                            .kio-receipt-page .receipt-header p {
+                                margin: 0;
+                                font-size: 15px;
+                            }
+                            .kio-receipt-page .receipt-title {
+                                text-align: center;
+                                margin: 12px 0 10px;
+                            }
+                            .kio-receipt-page .receipt-title h3 {
+                                margin: 0;
+                                font-size: 30px;
+                                font-weight: 700;
+                            }
+                            .kio-receipt-page .receipt-title p {
+                                margin: 4px 0 0;
+                                font-size: 15px;
+                            }
+                            .kio-receipt-page .student-row {
+                                margin: 10px 0 6px;
+                            }
+                            .kio-receipt-page .student-row table,
+                            .kio-receipt-page .receipt-table,
+                            .kio-receipt-page .footer-table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                table-layout: fixed;
+                            }
+                            .kio-receipt-page .student-row td {
+                                padding: 2px 4px 2px 0;
+                                vertical-align: bottom;
+                            }
+                            .kio-receipt-page .student-line {
+                                border-bottom: 1px dotted #000;
+                                height: 18px;
+                                line-height: 18px;
+                            }
+                            .kio-receipt-page .receipt-table th,
+                            .kio-receipt-page .receipt-table td {
+                                border: 1px solid #000;
+                                padding: 4px 6px;
+                            }
+                            .kio-receipt-page .receipt-table th {
+                                text-align: center;
+                                font-weight: 700;
+                                color: #000;
+                                font-size: 14px;
+                            }
+                            .kio-receipt-page .sl-col {
+                                width: 11%;
+                                text-align: center;
+                            }
+                            .kio-receipt-page .desc-col {
+                                width: 64%;
+                            }
+                            .kio-receipt-page .amt-col {
+                                width: 25%;
+                                text-align: right;
+                            }
+                            .kio-receipt-page .receipt-table tbody td {
+                                height: 26px;
+                            }
+                            .kio-receipt-page .footer-table td {
+                                padding-top: 8px;
+                                vertical-align: top;
+                            }
+                            .kio-receipt-page .total-label {
+                                text-align: right;
+                                font-weight: 700;
+                            }
+                            .kio-receipt-page .total-amount {
+                                text-align: right;
+                            }
+                            .kio-receipt-page .words-line {
+                                border-bottom: 1px dotted #000;
+                                min-height: 18px;
+                                display: inline-block;
+                                width: calc(100% - 105px);
+                                padding-bottom: 1px;
+                            }
+                            .kio-receipt-page .nowrap {
+                                white-space: nowrap;
+                            }
+                            .kio-receipt-page .value-cell {
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        </style>
+
+                        <div class="kio-receipt-page">
+                            <div class="receipt-header">
+                                <h2>JURAIN ADARSHA ACADEMY</h2>
+                                <p>1084/1, Baganbari Road, East Jurain, Kadamtoli, Dhaka-1204.</p>
+                                <p>E-mail: jaacademy46@gmail.com, Mob: 0101882-018162.</p>
+                            </div>
+
+                            <div class="receipt-title">
+                                <h3>Invoice</h3>
+                                <p>(Publication, Stationery &amp; others)</p>
+                            </div>
+
+                            <div class="student-row">
+                                <table>
+                                    <tr>
+                                        <td style="width: 18%;" class="nowrap"><strong>Student’s Name:</strong></td>
+                                        <td style="width: 82%;" class="student-line value-cell">
+                                            <span t-field="o.partner_id.name"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table>
+                                    <tr>
+                                        <td style="width: 8%;" class="nowrap"><strong>Calss:</strong></td>
+                                        <td style="width: 27%;" class="student-line value-cell">
+                                            <span t-field="o.student_class_division_id"/>
+                                        </td>
+                                        <td style="width: 10%; padding-left: 8px;" class="nowrap"><strong>Section:</strong></td>
+                                        <td style="width: 22%;" class="student-line value-cell">
+                                            <span t-field="o.student_group_id"/>
+                                        </td>
+                                        <td style="width: 11%; padding-left: 8px;" class="nowrap"><strong>Roll No.:</strong></td>
+                                        <td style="width: 22%;" class="student-line value-cell">
+                                            <span t-esc="o.student_class_roll or ''"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <table class="receipt-table">
+                                <thead>
+                                    <tr>
+                                        <th class="sl-col">Sl No.</th>
+                                        <th class="desc-col">Description</th>
+                                        <th class="amt-col">Taka</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="lines" t-as="line">
+                                        <td class="sl-col">
+                                            <span t-esc="'%02d' % (line_index + 1)"/>
+                                        </td>
+                                        <td class="desc-col">
+                                            <span t-esc="line.product_id.name or line.name or ''"/>
+                                        </td>
+                                        <td class="amt-col">
+                                            <span t-esc="'%.2f' % line.price_unit"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-foreach="range(blank_rows)" t-as="blank">
+                                        <td class="sl-col">
+                                            <span t-esc="'%02d' % (len(lines) + blank + 1)"/>
+                                        </td>
+                                        <td class="desc-col"></td>
+                                        <td class="amt-col"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sl-col"></td>
+                                        <td class="desc-col total-label">Total Taka =</td>
+                                        <td class="amt-col total-amount">
+                                            <span t-esc="'%.2f' % o.amount_total"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="footer-table">
+                                <tr>
+                                    <td colspan="2">
+                                        <strong>Taka In Word:</strong>
+                                        <span class="words-line">
+                                            <span t-esc="((o.amount_total_words or '').replace('\n', ' ').replace('  ', ' '))"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>
